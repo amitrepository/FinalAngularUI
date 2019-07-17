@@ -1,0 +1,116 @@
+
+<form [formGroup]="create_user_form" >
+    <div *ngIf="vaildMessage != ''">
+            <h3 class="has-info">{{vaildMessage}}</h3>
+            </div>
+
+<input type="hidden" formControlName="user_id"  name="user_id" />
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+      <td style="width: 150px">
+        First Name</td> 
+        <td>
+          <input type="text" formControlName="first_name"  name="first_name" class="form-control" required style="width:140px" />
+           <!-- show this error if the field is 'empty' and 'touched' -->
+           <div
+           *ngIf="create_user_form.get('first_name').touched && create_user_form.get('first_name').hasError('required')"
+           class="alert alert-danger">
+          First Name is required.
+       </div>
+      </td>
+      <tr>
+      <td style="width: 150px">
+          Last Name:</td>
+          <td>
+          <input type="text" formControlName="last_name"  name="last_name" class="form-control" required style="width:140px"/>
+          <!-- show this error if the field is 'empty' and 'touched' -->
+          <div
+          *ngIf="create_user_form.get('last_name').touched && create_user_form.get('last_name').hasError('required')"
+          class="alert alert-danger">
+         Last Name is required.
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+          Employee Id:</td>
+          <td>
+          <input type="text" formControlName="employee_id"  name="employee_id" class="form-control" required  style="width:140px"/>
+
+           <!-- show this error if the field is 'empty' and 'touched' -->
+           <div
+           *ngIf="create_user_form.get('employee_id').touched && create_user_form.get('employee_id').hasError('required')"
+           class="alert alert-danger">
+          Employee Id is required.
+           </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 200px">
+          <br/>
+          <div *ngIf="addOrUpdate == 'Add'">
+           <button (click)="createUser()">Add</button>
+          </div>
+          <div *ngIf="addOrUpdate == 'Update'">
+              <button (click)="updateUser()">Update</button>
+             </div>
+      </td>
+  </tr>
+</table>
+Sort By : <select ng-model="SortColumn" formControlName="sort">
+  
+    <option value="first_name">First Name Asc</option>  
+    <option value="last_name">Last Name Asc</option>  
+    <option value="employee_id">Employee Id Asc</option>  
+    <option value="first_name_desc">First Name Desc</option>  
+    <option value="last_name_desc">Last Name Desc</option>  
+    <option value="employee_id_desc">Employee Id Desc</option>  
+  
+  
+</select>
+<input placeholder="search for User name" formControlName="searchUserName" name="searchUserName" class="input-sm form-control" type="search"/>
+<table  class="table table-striped">
+	<thead>
+	<tr>
+    <th (click)="sortTable('first_name')">First Name</th>
+    <th (click)="sortTable('last_name')">Last Name</th>
+    <th (click)="sortTable('employee_id')">Employee Id</th>
+    
+    <th> </th>
+    
+  </tr>
+  <!--<tr>
+      <th colspan="7">
+          <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+        </th>
+	</tr>-->
+
+
+	</thead>
+	<tbody>
+    <tr *ngFor="let user of users |filterUserName: create_user_form.value.searchUserName | sortUser:create_user_form.value.sort:false ">
+      <td st-toggle-item> {{ user.first_name }} </td>
+      <td st-toggle-item> {{ user.last_name }} </td> 
+      <td st-toggle-item> {{ user.employee_id }} </td>
+        <td>
+      
+
+        <!-- edit Task button <a href="javascript:void(0);" class='btn btn-info m-r-5px' ng-click="viewUser()">
+          <span class='glyphicon glyphicon-edit' ></span> Edit</a>-->
+      <!--  <a (click)="updateTask(task.taskName)" class='btn btn-info m-r-5px'>
+            <span class='glyphicon glyphicon-edit'></span> Edit
+        </a>-->
+        <button class='btn btn-info m-r-5px' (click)="viewUser(user.first_name,user.last_name,user.employee_id,user.user_id)"><span class='glyphicon glyphicon-edit' ></span>Edit</button>
+        <!-- delete Task button -->
+        <button class='btn btn-info m-r-5px' (click)="deleteUser(user.user_id)"><span class='glyphicon glyphicon-remove' ></span>Delete</button>
+      <!--  <a  class='btn btn-info m-r-5px'>
+          <span class='glyphicon glyphicon-remove'></span> Delete</a>
+        <a (click)="deleteTask(task.taskName)" class='btn btn-danger m-r-5px'>
+            <span class='glyphicon glyphicon-remove'></span> End Task
+        </a>-->
+    </td>  
+  </tr>
+	</tbody>
+</table>
+
+</form>

@@ -1,0 +1,226 @@
+
+
+<!-- HTML form for creating a product -->
+<div class="row">
+<div class="col-md-12">
+
+<!--
+  1. Bind our HTML form to Angular using [formGroup]
+  2. If form was submitted, call createProduct() method of CreateProductComponent
+-->
+<form [formGroup]="update_task_form" (ngSubmit)="updateTask()">
+    <div *ngIf="vaildMessage != ''">
+        <h3 class="has-info">{{vaildMessage}}</h3>
+        </div>
+<table class="table table-hover table-responsive table-bordered">
+        <tr>
+                <td>Project</td>
+                <td>
+                    <!-- Bind this input field to our 'angular form field' using formControlName -->
+                    <input formControlName="project_id"
+                        name="project_id" type="text"
+                        class="form-control" required />
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Search</button>
+                    <!-- show this error if the field is 'empty' and 'touched' -->
+                    <div
+                        *ngIf="update_task_form.get('project_id').touched && update_task_form.get('project_id').hasError('required')"
+                        class="alert alert-danger">
+                       Project is required.
+                    </div>
+                </td>
+            </tr>
+  <tr>
+      <td>Task Name</td>
+      <td>
+          <!-- Bind this input field to our 'angular form field' using formControlName -->
+          <input formControlName="taskName"
+              name="taskName" type="text"
+              class="form-control" required readonly/>
+
+          <!-- show this error if the field is 'empty' and 'touched' -->
+          <div
+              *ngIf="update_task_form.get('taskName').touched && update_task_form.get('taskName').hasError('required')"
+              class="alert alert-danger">
+             Task Name is required.
+          </div>
+      </td>
+  </tr>
+
+  <tr>
+      <td>Priority</td>
+      <td>
+            <input type="range" class="slider" formControlName="priority" min="0" max="30" value="50" style="width:50%;"
+            name="priority"  class="form-control" required>
+          
+          <!-- show this error if the field is 'empty' and 'touched' -->
+          <div
+              *ngIf="update_task_form.get('priority').touched && update_task_form.get('priority').hasError('required')"
+              class="alert alert-danger">
+              Priority is required.
+          </div>
+      </td>
+  </tr>
+
+  <tr>
+      <td>Parent Task</td>
+      <td>
+            <input
+            formControlName="parent_task_id"
+            name="parent_task_id" type="text"
+            class="form-control" required />
+
+              <!-- show this error if the field is 'empty' and 'touched' -->
+              <div
+                  *ngIf="update_task_form.get('parent_task_id').touched && update_task_form.get('parent_task_id').hasError('required')"
+                  class="alert alert-danger">
+                  Parent Task id is required.
+              </div>
+      </td>
+  </tr>
+
+  <tr>
+      <td>Start Date</td>
+      <td>
+            <input
+            formControlName="start_date"
+            name="start_date" type="text"
+            class="form-control" required />
+          <!-- show this error if the field is 'empty' and 'touched' -->
+          <div
+              *ngIf="update_task_form.get('start_date').touched && update_task_form.get('start_date').hasError('required')"
+              class="alert alert-danger">
+              Start Date is required.
+          </div>
+      </td>
+  </tr>
+  <tr>
+        <td>End Date</td>
+        <td>
+              <input
+              formControlName="end_date"
+              name="end_date" type="text"
+              class="form-control" required />
+            <!-- show this error if the field is 'empty' and 'touched' -->
+            <div
+                *ngIf="update_task_form.get('end_date').touched && update_task_form.get('end_date').hasError('required')"
+                class="alert alert-danger">
+                End Date is required.
+            </div>
+        </td>
+    </tr>
+    <tr>
+            <td>User</td>
+            <td>
+                  <input
+                  formControlName="userId"
+                  name="userId" type="text"
+                  class="form-control" required />
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Search</button>
+                <!-- show this error if the field is 'empty' and 'touched' -->
+                <div
+                    *ngIf="update_task_form.get('userId').touched && update_task_form.get('userId').hasError('required')"
+                    class="alert alert-danger">
+                    User is required.
+                </div>
+            </td>
+        </tr>
+  <tr>
+      <td></td>
+      <td>
+          <!-- disable the submit button if the form is 'invalid' -->
+          <button class="btn btn-primary" type="submit" [disabled]="update_task_form.invalid">
+              <span class="glyphicon glyphicon-plus"></span> Update Task
+          </button>
+      </td>
+  </tr>
+</table>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">User Search</h4>
+            </div>
+            <div class="modal-body">
+                <input placeholder="search for User name" formControlName="searchUserName" name="searchUserName" class="input-sm form-control" type="search"/>
+                <table  class="table table-striped">
+                   <thead>
+                    <tr>
+                      <th>Manager Name</th>
+                     <th>Employee Id</th>
+                 </tr>
+                    <!--<tr>
+                        <th colspan="7">
+                            <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+                          </th>
+                    </tr>-->
+                  
+                  
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let user of users | filterUserName: update_task_form.value.searchUserName">
+                        <td st-toggle-item><a  (click)="populateTaskOwnerId(user.user_id);" >  {{ user.first_name }}, {{ user.last_name }} </a> </td>
+                         <td st-toggle-iusertem> {{ user.employee_id }} </td>
+                        </tr>
+                    </tbody>
+                  </table>
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+
+
+<!---Modal for Project search -->
+<div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Project Search</h4>
+            </div>
+            <div class="modal-body">
+                <input placeholder="search for Project name" formControlName="searchProjectName" name="searchProjectName" class="input-sm form-control" type="search"/>
+                <table  class="table table-striped">
+                   <thead>
+                    <tr>
+                      <th>Project Name</th>
+                 </tr>
+                    <!--<tr>
+                        <th colspan="7">
+                            <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+                          </th>
+                    </tr>-->
+                  
+                  
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let project of projects | filterProjectName : update_task_form.value.searchProjectName">
+                        <td st-toggle-item><a  (click)="populateProjectId(project.project_id);" >  {{ project.projectName }}</a> </td>
+                        </tr>
+                    </tbody>
+                  </table>
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+
+</form>
+
+</div>
+</div>

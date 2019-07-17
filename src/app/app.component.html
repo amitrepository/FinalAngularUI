@@ -1,0 +1,29 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<p>
+    PROJECT MANAGER
+  </p>
+
+<div style="text-align:left">
+  <a [routerLink]="'/AddProject'"> Add Project </a>
+  <a [routerLink]="'/ViewTask'"> View Task </a>
+  <a [routerLink]="'/AddTask'"> Add Task </a>
+   <a [routerLink]="'/AddUser'"> Add User </a>
+</div>
+
+<div>
+  <router-outlet></router-outlet>
+
+  <!--
+    * Show this view if "show_update_product_html" is true.
+ 
+    * Pass "product_id" property value of AppComponent
+      to [product_id] property of UpdateProductComponent.
+ 
+    * If (show_read_products_event) was emitted in UpdateProductComponent,
+      trigger showReadProducts() method in AppComponent.
+-->
+<!--<app-update-task
+*ngIf="show_update_task_html"
+[taskName]="taskName">
+</app-update-task>-->
+</div>

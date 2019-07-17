@@ -1,0 +1,139 @@
+
+
+  
+ <!--<div class="container" ng-app="formvalid">
+      <div class="panel">
+  <div class="panel-heading border">   
+    <ng2-smart-table mode='external'
+    [settings]="settings" 
+    [source]="tasks"  edit="onSaveConfirm($event)"
+    > 
+</ng2-smart-table>-->
+
+
+<!--DYNAMICALLY POPULATE SELECT ELEMENT USING JSON HEADERS-->
+
+<!--<select ng-model="columns" ng-options="e for e in headers">
+    <option value=""></option>
+</select>-->
+
+<!--BIND THE SEARCH BOX TO THE SELECT ELEMENT-->
+<form [formGroup]="view_task_form" >
+Project Name:  <input formControlName="projectName"
+name="projectName" type="text"
+class="form-control" required/>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Search For Projects</button>
+<!--<button type="button" class="btn btn-primary" (click)="getTasksByProject();">Search</button>-->
+<br>
+Sort By :<button (click)="sortTable('taskName')">Task Name</button> <button (click)="sortTable('start_date')">Start date</button> <button (click)="sortTable('end_date')">End date</button> <button (click)="sortTable('priority')">Priority</button>
+<br>
+Task Name 
+
+    <input type="text" formControlName="searchText" placeholder="search text goes here">
+    Parent Task
+
+    <input type="text" formControlName="searchParent" name="searchParent" placeholder="search text goes here">   
+    Priority 
+
+    <input type="text" formControlName="searchPrior" name="searchPrior" placeholder="search text goes here">
+
+    Start Date
+
+    <input type="text" formControlName="searchStart"  name="searchStart" placeholder="search text goes here">
+
+    End Date 
+
+    <input type="text" formControlName="searchEnd" name="searchEnd" placeholder="search text goes here">
+<table st-table="tasks" class="table table-striped">
+	<thead>
+	<tr>
+    <th stSort="taskName" st-toggle-column>Task</th>
+    <th stSort="parent_task_id" st-toggle-column>Parent Task</th>
+    <th stSort="priority" st-toggle-column>Priority</th>
+    <th stSort="start_date" st-toggle-column>Start Date</th>
+    <th stSort="end_date" st-toggle-column>End Date</th>
+    <th> </th>
+    
+  </tr>
+  <!--<tr>
+      <th colspan="7">
+          <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+        </th>
+	</tr>-->
+
+
+	</thead>
+	<tbody>
+    <tr *ngFor="let task of tasks |  filter : view_task_form.value.searchText | filterParent : view_task_form.value.searchParent | filterPrior : searchPrior  | filterStart : searchStart | filterEnd : searchEnd">
+      <td st-toggle-item> {{ task.taskName }} </td>
+      <td st-toggle-item> {{ task.parent_task_id }} </td> 
+      <td st-toggle-item> {{ task.priority }} </td>
+      <td st-toggle-item>  {{ task.start_date }}  </td>
+      <td st-toggle-item> {{ task.end_date }} </td>
+      <td>
+      
+
+        <!-- edit Task button --><a [routerLink] ="['taskView/',task.taskName]" class='btn btn-info m-r-5px'>
+          <span class='glyphicon glyphicon-edit'></span> Edit</a>
+      <!--  <a (click)="updateTask(task.taskName)" class='btn btn-info m-r-5px'>
+            <span class='glyphicon glyphicon-edit'></span> Edit
+        </a>-->
+
+        <!-- delete Task button -->
+
+        <a [routerLink] ="['taskDelete/',task.taskName]" class='btn btn-info m-r-5px'>
+          <span class='glyphicon glyphicon-remove'></span> End Task</a>
+      <!--  <a (click)="deleteTask(task.taskName)" class='btn btn-danger m-r-5px'>
+            <span class='glyphicon glyphicon-remove'></span> End Task
+        </a>-->
+    </td>
+  </tr>
+	</tbody>
+</table>
+
+<!---Modal for Project search -->
+<div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Project Search</h4>
+            </div>
+            <div class="modal-body">
+                    <input placeholder="search for Project name" formControlName="searchProjectName" name="searchProjectName" class="input-sm form-control" type="search"/>
+                <table  class="table table-striped">
+                   <thead>
+                    <tr>
+                      <th>Project Name</th>
+                 </tr>
+                    <!--<tr>
+                        <th colspan="7">
+                            <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+                          </th>
+                    </tr>-->
+                  
+                  
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let project of projects | filterProjectName : view_task_form.value.searchProjectName">
+                        <td st-toggle-item><a  (click)="populateProjectId(project.projectName);getTasksByProject();" >  {{ project.projectName }}</a> </td>
+                        </tr>
+                    </tbody>
+                  </table>
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+</form>
+  
+<script>
+
+</script>
+ 
