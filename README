@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 This branch b1 Code change. This is read me
 Second line in branch b1
@@ -11,3 +12,5 @@ C:\Revert test\FinalAngularUI [feature/b3]>
 This is Branch b3 Code
 
 
+=======
+>>>>>>> parent of bbcac54 (Merge pull request #21 from amitrepository/feature/b3)
