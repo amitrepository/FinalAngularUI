@@ -1,6 +1,6 @@
 {
-  "name": "capsule-project",
-  "version": "0.0.0",
+  "name": "capsule-projects",
+  "version": "0.0.0.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
